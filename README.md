@@ -38,6 +38,13 @@ https://www.kesci.com/home/competition/5cc51043f71088002c5b8840/content/1
     * 我们对query的tfidf矩阵进行tsvd降维。这个特征很多队伍没有用到，原因是tfidf维度过高。
       *我们采用的方法是使用了gensim库里的lsi主题模型*，lsi的本质即对矩阵进行tsvd降维。
       我们曾尝试降到50维 30维 20维，最终结果为20维效果最佳。
- 
+      
+      需要注意的是，具体做法为：
+      先把（训练集10亿数据+测试集1.3亿数据）所有的query和title装到一个set里（即去重操作），然后做tfidf出来（用gensim）。（因为tfidf是一个统计值，所以数据量越大越好）
+      然后把每条（上面set里的）query的tfidf拿出来，组成一个shape为（query的数量 * tfidf维度）的一个矩阵。
+      然后用gensim中的lsi模型进行分解，分解的时候注意设置chunksize，并且使用迭代器（具体的见代码，要不然内存会炸）。
+
+ - 在使用fuzzy和莱文斯顿库的时候，首先要将加密的词映射为一个个汉字。（这个特征是后来修正的，有一到两个千的提升。）
+     
       
 
