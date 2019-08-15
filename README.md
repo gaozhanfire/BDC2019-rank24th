@@ -41,7 +41,7 @@ nn stacking+lgb a榜605 b榜618 。
       我们使用了没用来训练的那9.5亿条数据进行groupby('title')['label'].agg({'count':'title_count','sum','title_sum','mean','title_ctr'})
       来构造出了点击率特征，count的含义，就是该条title的出现量（投放量），而sum，就是title出现了这么多次，这其中有多少次用户点击了该条title。
       *我们对ctr特征进行了***贝叶斯平滑***，以此取得了两个千分位的提升，具体代码已包含在文件中 *  
-          - 我们没有对query进行统计，这是因为query在测试集和训练集的重复率并不高，所以没法利用query的历史信息。
+    * 我们没有对query进行统计，这是因为query在测试集和训练集的重复率并不高，所以没法利用query的历史信息。
         
 - tsvd降维特征（3个千的提升）：
     * 我们对query的tfidf矩阵进行tsvd降维。这个特征很多队伍没有用到，原因是tfidf维度过高。
