@@ -61,6 +61,11 @@ nn stacking+lgb a榜605 b榜618 。
 **一些提分的操作：**  
       - 5折交叉验证：即5折训练5个模型，最后模型结果取平均，能有一个千分位提升。  
       - 模型blending/stacking：像这种数据用不完的大数据量比赛，可以使用stacking（因为你可以抽一部分来训练，抽另一部分来做stacking，避免信息泄露），我们在我们抽取的5000W训练集之外又抽取了1000W数据，用这1000W数据对模型结果进行了集合。  
+      - 对投放量（title_count）、点击次数（title_sum）、title下query的种类数（title_nunique_prefix），在训练集和测试集上分别进行了归一化。
+      该操作有5个万的提升。
+      使用的库为 from sklearn import preprocessing 中的QuantileTransformer这个函数。
+      我们不是用训练集的均值来对测试集归一的，而是fit_transform(train) fir_transform_test
+      （用训练集的均值对测试集归一化，我们也尝试过，效果没有对训练集和测试集分别归一的好）
     
 ---
      
